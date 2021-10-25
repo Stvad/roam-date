@@ -1,0 +1,12 @@
+.date-buttons {
+    display: flex;
+    justify-content: space-between;
+    line-height: 2.5em;
+}
+
+.date-button {
+    flex-grow: 2;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+    margin-bottom: 1em;
+}
