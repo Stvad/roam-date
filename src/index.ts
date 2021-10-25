@@ -13,6 +13,7 @@ runExtension(ID, () => {
   createConfigObserver({ title: CONFIG, config: { tabs: [] } });
 
   //todo do the thing for a specific date object in a block
+  //todo nail down position of the icon and disappearance thing
   createBlockObserver((b: HTMLDivElement) => {
     if(noDatesReferenced(b)) return
 

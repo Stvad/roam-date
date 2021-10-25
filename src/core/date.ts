@@ -17,3 +17,5 @@ export function modifyDateInBlock(blockUid: string, modifier: (input: number) =>
         RoamDate.toDatePage(applyToDate(RoamDate.parseFromReference(datesInContent[0]), modifier)),
     )
 }
+
+export const addDays = (date: Date, days: number) => applyToDate(date, createModifier(days))

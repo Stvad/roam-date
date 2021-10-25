@@ -5,7 +5,8 @@
   "main": "./build/main.js",
   "scripts": {
     "build": "roamjs-scripts build",
-    "dev": "roamjs-scripts dev"
+    "dev": "roamjs-scripts dev",
+    "deploy": "netlify deploy --prod -s roam-date.roam.garden -d build"
   },
   "license": "MIT",
   "devDependencies": {
