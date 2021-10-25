@@ -2,8 +2,6 @@ import React from "react"
 
 import {Dialog} from "@blueprintjs/core"
 
-import {Popover2} from "@blueprintjs/popover2"
-
 import {createOverlayRender} from "roamjs-components"
 import {createModifier, modifyDateInBlock} from "./core/date"
 
@@ -11,38 +9,29 @@ export type DatePanelProps = {
     blockUid: string
 }
 
-export const DatePanel = (props: { onClose: () => void; } & DatePanelProps) => <Dialog
+// todo display date under edit
+export const DatePanel = ({blockUid, onClose, ...restProps}: { onClose: () => void; } & DatePanelProps) => <Dialog
     isOpen={true}
-    onClose={props.onClose}
+    onClose={onClose}
     canEscapeKeyClose>
 
     <div>
-        <h1>Whee</h1>
+        <h1>Date to edit todo </h1>
 
         <div className="buttons">
-            <button onClick={()=> modifyDateInBlock(props.blockUid, createModifier(1))}>+</button>
-            <button onClick={()=> modifyDateInBlock(props.blockUid, createModifier(-1))}>-</button>
+            <div className="dayButtons">
+                <button onClick={() => modifyDateInBlock(blockUid, createModifier(1))}>+1d</button>
+                <button onClick={() => modifyDateInBlock(blockUid, createModifier(-1))}>-1d</button>
+            </div>
+
+            <div className="weekButtons">
+                <button onClick={() => modifyDateInBlock(blockUid, createModifier(7))}>+1w</button>
+                <button onClick={() => modifyDateInBlock(blockUid, createModifier(-7))}>-1w</button>
+            </div>
         </div>
     </div>
 
 </Dialog>
-
-export const DatePanel2 = (props: { onClose: () => void; } & DatePanelProps) => <Popover2
-    isOpen={true}
-    onClose={props.onClose}
-    canEscapeKeyClose
-    content={
-        <div>
-            <h1>Whee</h1>
-        </div>
-    }
-    targetTagName={"div"}
-    // renderTarget={({ isOpen, ref, ...targetProps }) => (
-    //         <Button {...targetProps} elementRef={ref} intent="primary" text="Popover target" />
-    //     )
-    // }
->
-</Popover2>
 
 export const DatePanelOverlay = createOverlayRender<DatePanelProps>("date-overlay", DatePanel)
 
