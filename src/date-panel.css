@@ -10,3 +10,19 @@
     margin-right: 0.2em;
     margin-bottom: 1em;
 }
+
+.date-under-edit, .date-dialog-header {
+    text-align: center;
+}
+
+.date-dialog-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.date-dialog {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+/*todo better text*/

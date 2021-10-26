@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 
 import {Classes, Dialog} from "@blueprintjs/core"
 
@@ -10,53 +10,74 @@ import {Block} from "../../roam-client"
 import {SM2Node} from "./srs/SM2Node"
 
 import "./date-panel.css"
+import {delay} from "./core/async"
 
 export type DatePanelProps = {
     blockUid: string
 }
 
 interface MoveDateButtonParams {
-    blockUid: string
     shift: number
     label: string
 }
 
-const MoveDateButton = ({blockUid, shift, label}: MoveDateButtonParams) =>
-    <button className={"date-button"}
-            onClick={() => modifyDateInBlock(blockUid, createModifier(shift))}
-    >
-        {label}
-    </button>
 
 
-// todo display date under edit
-export const DatePanel = ({blockUid, onClose, ...restProps}: { onClose: () => void; } & DatePanelProps) =>
-    <Dialog
+function getFirstDate(blockUid: string) {
+    //todo
+    return new SM2Node(Block.fromUid(blockUid).text)
+        .listDatePages()[0]
+        ?.slice(2)?.slice(0, -2)
+}
+
+export const DatePanel = ({blockUid, onClose }: { onClose: () => void; } & DatePanelProps) => {
+    const [date, setDate] = useState<string>(getFirstDate(blockUid))
+
+    async function updateDate() {
+        await delay(0)
+        setDate(getFirstDate(blockUid))
+    }
+
+    const MoveDateButton = ({shift, label}: MoveDateButtonParams) =>
+        <button className={"date-button"}
+                onClick={async () => {
+                    modifyDateInBlock(blockUid, createModifier(shift))
+                    await updateDate()
+                }}
+        >
+            {label}
+        </button>
+
+
+    return <Dialog
         isOpen={true}
         onClose={onClose}
         canEscapeKeyClose
-        portalClassName={"date-dialog-portal"}
+        backdropClassName={"date-dialog-backdrop"}
+        className={"date-dialog"}
     >
-
-        <div className={Classes.DIALOG_BODY}>
-            <h1>Date to edit todo </h1>
+        <div className={Classes.DIALOG_BODY + " date-dialog-body"}>
+            <h1 className={"date-under-edit"}>{date}</h1>
 
             <div className="buttons">
                 <div className="day-buttons date-buttons">
-                    <MoveDateButton blockUid={blockUid} shift={1} label={"+"}/>
-                    <MoveDateButton blockUid={blockUid} shift={-1} label={"-"}/>
+                    <MoveDateButton shift={1} label={"+"}/>
+                    <MoveDateButton shift={-1} label={"-"}/>
                 </div>
 
                 <div className="week-buttons date-buttons">
-                    <MoveDateButton blockUid={blockUid} shift={7} label={"+1w"}/>
-                    <MoveDateButton blockUid={blockUid} shift={-7} label={"-1w"}/>
+                    <MoveDateButton shift={7} label={"+1w"}/>
+                    <MoveDateButton shift={-7} label={"-1w"}/>
                 </div>
 
-                <h3>SRS</h3>
+                <h3 className={"date-dialog-header"}>SRS</h3>
                 <div className="srs-buttons date-buttons">
                     {SRSSignals.map(it => <button
                         className={"srs-button date-button"}
-                        onClick={() => rescheduleBlock(blockUid, it)}
+                        onClick={async () => {
+                            rescheduleBlock(blockUid, it)
+                            await updateDate()
+                        }}
                     >
                         {SRSSignal[it]}
                     </button>)}
@@ -64,8 +85,8 @@ export const DatePanel = ({blockUid, onClose, ...restProps}: { onClose: () => vo
 
             </div>
         </div>
-
     </Dialog>
+}
 
 export const DatePanelOverlay = createOverlayRender<DatePanelProps>("date-overlay", DatePanel)
 
