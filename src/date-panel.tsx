@@ -21,16 +21,15 @@ interface MoveDateButtonParams {
     label: string
 }
 
-
-
 function getFirstDate(blockUid: string) {
-    //todo
-    return new SM2Node(Block.fromUid(blockUid).text)
-        .listDatePages()[0]
-        ?.slice(2)?.slice(0, -2)
+    const date = new SM2Node(Block.fromUid(blockUid).text).listDates()[0]
+
+    return date.toLocaleDateString('en-US',
+        {weekday: 'short', year: 'numeric', month: 'long', day: 'numeric'})
+
 }
 
-export const DatePanel = ({blockUid, onClose }: { onClose: () => void; } & DatePanelProps) => {
+export const DatePanel = ({blockUid, onClose}: { onClose: () => void; } & DatePanelProps) => {
     const [date, setDate] = useState<string>(getFirstDate(blockUid))
 
     async function updateDate() {
@@ -61,8 +60,8 @@ export const DatePanel = ({blockUid, onClose }: { onClose: () => void; } & DateP
 
             <div className="buttons">
                 <div className="day-buttons date-buttons">
-                    <MoveDateButton shift={1} label={"+"}/>
-                    <MoveDateButton shift={-1} label={"-"}/>
+                    <MoveDateButton shift={1} label={"+1d"}/>
+                    <MoveDateButton shift={-1} label={"-1d"}/>
                 </div>
 
                 <div className="week-buttons date-buttons">
@@ -82,7 +81,6 @@ export const DatePanel = ({blockUid, onClose }: { onClose: () => void; } & DateP
                         {SRSSignal[it]}
                     </button>)}
                 </div>
-
             </div>
         </div>
     </Dialog>

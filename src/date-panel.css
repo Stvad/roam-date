@@ -9,10 +9,20 @@
     margin-left: 0.2em;
     margin-right: 0.2em;
     margin-bottom: 1em;
+
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #5c7080;
+    border-radius: 5px;
+    border-width: thin;
 }
 
 .date-under-edit, .date-dialog-header {
     text-align: center;
+}
+
+.date-under-edit {
+    margin-bottom: 0.7em;
 }
 
 .date-dialog-body {
@@ -24,5 +34,3 @@
     margin-left: 0.5em;
     margin-right: 0.5em;
 }
-
-/*todo better text*/

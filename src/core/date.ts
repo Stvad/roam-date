@@ -19,3 +19,7 @@ export function modifyDateInBlock(blockUid: string, modifier: (input: number) =>
 }
 
 export const addDays = (date: Date, days: number) => applyToDate(date, createModifier(days))
+
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+export const getDayName = (date: Date) => days[date.getDay()]
