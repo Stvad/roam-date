@@ -8,6 +8,11 @@ const CONFIG = toConfig(ID);
 const noDatesReferenced = (element: HTMLDivElement) =>
     !RoamDate.regex.test(element.innerText)
 
+const iconClass = "roam-date-icon"
+
+const iconAlreadyExists = (refElement: HTMLElement) =>
+    refElement.parentElement.querySelector(`.${iconClass}`)
+
 runExtension(ID, () => {
   console.log("run extension is run")
   createConfigObserver({ title: CONFIG, config: { tabs: [] } });
@@ -19,11 +24,12 @@ runExtension(ID, () => {
 
     const refElement = b.querySelector(".rm-page-ref")?.parentElement;
     // no refs don't care. or probably want to have a loop here actually
-    if (!refElement) return
+    if (!refElement || iconAlreadyExists(refElement)) return
 
     const blockUid = getUids(b).blockUid
 
     const icon = createIconButton("calendar");
+    icon.className = iconClass
     icon.addEventListener("mousedown", (e) => {
       e.stopPropagation()
       DatePanelOverlay({blockUid})
