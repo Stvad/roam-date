@@ -5,13 +5,20 @@ import {DatePanelOverlay} from "./date-panel"
 const ID = "roam-date";
 const CONFIG = toConfig(ID);
 
-const noDatesReferenced = (element: HTMLDivElement) =>
-    !RoamDate.regex.test(element.innerText)
+//todo this matches things that have a sub-node with date
+const hasDateReferenced = (element: HTMLDivElement) =>
+    RoamDate.regex.test(element.innerText)
 
 const iconClass = "roam-date-icon"
 
 const iconAlreadyExists = (refElement: HTMLElement) =>
     refElement.parentElement.querySelector(`.${iconClass}`)
+
+function findDateRef(b: HTMLDivElement) {
+  const refs = b.querySelectorAll(".rm-page-ref")
+  const dateElement = [...refs].find(hasDateReferenced)
+  return dateElement?.parentElement
+}
 
 runExtension(ID, () => {
   console.log("run extension is run")
@@ -20,9 +27,9 @@ runExtension(ID, () => {
   //todo do the thing for a specific date object in a block
   //todo nail down position of the icon and disappearance thing
   createBlockObserver((b: HTMLDivElement) => {
-    if(noDatesReferenced(b)) return
+    if(!hasDateReferenced(b)) return
 
-    const refElement = b.querySelector(".rm-page-ref")?.parentElement;
+    const refElement = findDateRef(b);
     // no refs don't care. or probably want to have a loop here actually
     if (!refElement || iconAlreadyExists(refElement)) return
 
