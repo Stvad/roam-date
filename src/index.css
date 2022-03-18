@@ -1,6 +1,8 @@
 .roam-date-icon {
     padding: 0.3em;
+    padding-top: 0.1em;
     background: gold;
     border-radius: 3px;
     margin-right: 0.2em;
+    cursor: pointer;
 }
