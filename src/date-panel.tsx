@@ -2,7 +2,6 @@ import React, {useState} from "react"
 
 import {Classes, Dialog} from "@blueprintjs/core"
 
-import {createOverlayRender} from "roamjs-components"
 import {createModifier, modifyDateInBlock} from "./core/date"
 import {SRSSignal, SRSSignals} from "./srs/scheduler"
 import {AnkiScheduler} from "./srs/AnkiScheduler"
@@ -11,6 +10,7 @@ import {SM2Node} from "./srs/SM2Node"
 
 import "./date-panel.css"
 import {delay} from "./core/async"
+import {createOverlayRender} from 'roamjs-components/util'
 
 export type DatePanelProps = {
     blockUid: string
