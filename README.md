@@ -14,6 +14,11 @@ The extension will add the calendar icon close to each date link. Clicking on th
 
 ![](./media/screen1.jpg)
 
+### Shortcuts
+
+- <code> Ctrl + Shift + `</code> - go to today's page
+- <code> Ctrl + Shift + 1</code> - open today's page in the right sidebar
+
 ## Installation
 
 1. [Install Roam plugin](https://roamstack.com/how-install-roam-plugin/) via the following code-block
