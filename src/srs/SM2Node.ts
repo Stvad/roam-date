@@ -1,10 +1,9 @@
-// import {withDate} from './date/withDate'
-// import {RoamNode, Selection} from '../roam/roam-node'
-
-import {Date as RoamDate} from "roam-client"
+import {RoamDate} from "roam-api-wrappers/dist/date"
+import {Block, Roam} from "roam-api-wrappers/dist/data"
+import {delay} from '../core/async'
 
 export class RoamNode {
-    constructor(readonly text: string) {}
+    constructor(readonly text: string, readonly selection: NodeSelection = new NodeSelection()) {}
 
     getInlineProperty(name: string) {
         return RoamNode.getInlinePropertyMatcher(name).exec(this.text)?.[1]
@@ -35,8 +34,8 @@ export class RoamNode {
 }
 
 export class SM2Node extends RoamNode {
-    constructor(text: string) {
-        super(text)
+    constructor(text: string, selection: NodeSelection = new NodeSelection()) {
+        super(text, selection)
     }
 
     private readonly intervalProperty = 'interval'
@@ -81,4 +80,24 @@ export class SM2Node extends RoamNode {
         return new this.constructor(newText)
     }
 
+}
+
+export class NodeSelection {
+    constructor(readonly start: number = 0, readonly end: number = 0) {}
+}
+
+export const saveToCurrentBlock = async (node: RoamNode) => {
+    const block = Block.current
+    block.text = node.text
+
+    return window.roamAlphaAPI.ui.setBlockFocusAndSelection({
+        location: {
+            'block-uid': block.uid,
+            'window-id': Roam.focusedBlockInfo()['window-id']
+        },
+        selection: {
+            start: node.selection.start,
+            end: node.selection.end,
+        }
+    })
 }

@@ -1,15 +1,16 @@
-import {Date as RoamDate, getUids,} from 'roam-client'
+import {RoamDate} from "roam-api-wrappers/dist/date"
+
 import toConfigPageName from 'roamjs-components/util/toConfigPageName'
 import runExtension from 'roamjs-components/util/runExtension'
 import 'roamjs-components/types'
 import {createConfigObserver} from 'roamjs-components/components/ConfigPage'
-import {createIconButton} from 'roamjs-components/dom'
+import {createBlockObserver, createIconButton, getUids} from 'roamjs-components/dom'
 
 import {DatePanelOverlay} from './date-panel'
 
 import './index.css'
-import {createBlockObserver} from '../../roam-client'
 import {setupNavigation} from './navigation'
+import {setup as setupFuzzies} from './fuzzy-date'
 
 const ID = 'roam-date'
 const CONFIG = toConfigPageName(ID)
@@ -34,6 +35,7 @@ export default runExtension({
     run: () => {
         console.log('run extension is run')
         setupNavigation()
+        setupFuzzies()
 
         createConfigObserver({title: CONFIG, config: {tabs: []}})
 

@@ -5,7 +5,7 @@ import {Classes, Dialog} from "@blueprintjs/core"
 import {createModifier, modifyDateInBlock} from "./core/date"
 import {SRSSignal, SRSSignals} from "./srs/scheduler"
 import {AnkiScheduler} from "./srs/AnkiScheduler"
-import {Block} from "../../roam-client"
+import {Block} from "roam-api-wrappers/dist/data"
 import {SM2Node} from "./srs/SM2Node"
 
 import "./date-panel.css"

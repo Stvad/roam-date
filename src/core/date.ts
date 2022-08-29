@@ -1,4 +1,5 @@
-import {Block, Date as RoamDate} from "roam-client"
+import {RoamDate} from "roam-api-wrappers/dist/date"
+import {Block} from "roam-api-wrappers/dist/data"
 
 const applyToDate = (date: Date, modifier: (input: number) => number): Date => {
     const newDate = new Date(date)
