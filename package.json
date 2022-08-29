@@ -6,7 +6,9 @@
   "scripts": {
     "build": "roamjs-scripts build",
     "dev": "roamjs-scripts dev",
-    "deploy": "netlify deploy --prod -s roam-date.roam.garden -d build"
+    "deploy": "netlify deploy --prod -s roam-date.roam.garden -d build",
+    "prebuild:roam": "yarn install",
+    "build:roam": "roamjs-scripts build --depot"
   },
   "license": "MIT",
   "devDependencies": {
