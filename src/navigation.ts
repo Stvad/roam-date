@@ -11,3 +11,7 @@ export const setupNavigation = () => {
     hotkeys('ctrl+shift+1', () =>
         void openPageInSidebar(RoamDate.toRoam(new Date())))
 }
+
+export const disableNavigation = () => {
+    hotkeys.unbind()
+}

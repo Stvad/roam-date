@@ -16,7 +16,7 @@ SRS behaviour is compatible with [Roam Toolkit](https://github.com/roam-unoffici
 
 The extension will add the calendar icon close to each date link. Clicking on the icon will invoke the widget & allow you to edit the selected date
 
-![](./media/screen1.jpg)
+![](https://github.com/Stvad/roam-date/raw/master/media/screen1.jpg)
 
 ### Navigation Shortcuts
 
@@ -27,11 +27,11 @@ The extension will add the calendar icon close to each date link. Clicking on th
 
 You can create dates using [**natural language**](https://github.com/wanasit/chrono):
 
-![](./media/fuzzy_date.gif)
+![](https://github.com/Stvad/roam-date/raw/master/media/fuzzy_date.gif)
 
 Replace mode:
 
-![](./media/fuzzy_date_replace.gif)
+![](https://github.com/Stvad/roam-date/raw/master/media/fuzzy_date_replace.gif)
 
 
 ## Installation
@@ -60,4 +60,4 @@ document.getElementsByTagName('head')[0].appendChild(roamDate)
 
 ## Known issues
 
-- Currently date widget, works only for blocks with 1 date in them
+- Currently, date widget, works only for blocks with 1 date in them

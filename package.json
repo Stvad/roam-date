@@ -5,7 +5,7 @@
   "main": "./build/main.js",
   "scripts": {
     "build": "roamjs-scripts build",
-    "dev": "roamjs-scripts dev",
+    "dev": "roamjs-scripts dev --depot",
     "deploy": "netlify deploy --prod -s roam-date.roam.garden -d build",
     "prebuild:roam": "yarn install",
     "build:roam": "roamjs-scripts build --depot"
@@ -19,12 +19,12 @@
   },
   "dependencies": {
     "@blueprintjs/popover2": "^0.12.7",
+    "chrono-node": "^2.4.1",
+    "date-fns": "^2.29.2",
     "hotkeys-js": "^3.9.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "roamjs-components": "^0.72.9",
-    "chrono-node": "^2.4.1",
-    "date-fns": "^2.29.2",
-    "roam-api-wrappers": "^0.1.0"
+    "roam-api-wrappers": "^0.1.0",
+    "roamjs-components": "^0.72.9"
   }
 }

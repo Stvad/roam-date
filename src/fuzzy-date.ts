@@ -58,7 +58,7 @@ export const setup = () => {
     document.addEventListener('keypress', keypressListener)
 }
 
-const disable = () => {
+export const disable = () => {
     document.removeEventListener('keypress', keypressListener)
 }
 

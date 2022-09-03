@@ -1,19 +1,18 @@
-import {RoamDate} from "roam-api-wrappers/dist/date"
+import {RoamDate} from 'roam-api-wrappers/dist/date'
 
-import toConfigPageName from 'roamjs-components/util/toConfigPageName'
 import runExtension from 'roamjs-components/util/runExtension'
 import 'roamjs-components/types'
-import {createConfigObserver} from 'roamjs-components/components/ConfigPage'
-import {createBlockObserver, createIconButton, getUids} from 'roamjs-components/dom'
+import createBlockObserver from 'roamjs-components/dom/createBlockObserver'
+import createIconButton from 'roamjs-components/dom/createIconButton'
+import getUids from 'roamjs-components/dom/getUids'
 
 import {DatePanelOverlay} from './date-panel'
 
 import './index.css'
-import {setupNavigation} from './navigation'
-import {setup as setupFuzzies} from './fuzzy-date'
+import {disableNavigation, setupNavigation} from './navigation'
+import {setup as setupFuzzies, disable as disableFuzzies} from './fuzzy-date'
 
 const ID = 'roam-date'
-const CONFIG = toConfigPageName(ID)
 
 //todo this matches things that have a sub-node with date
 const hasDateReferenced = (element: HTMLDivElement) =>
@@ -30,6 +29,15 @@ function findDateRef(b: HTMLDivElement) {
     return dateElement?.parentElement
 }
 
+const removeIconButtons = () =>
+    document.querySelectorAll(`.${iconClass}`).forEach((i) => i.remove())
+
+
+let observersToCleanup: MutationObserver[]
+const cleanupBlockObservers = () => {
+    observersToCleanup?.forEach((o) => o.disconnect())
+}
+
 export default runExtension({
     extensionId: ID,
     run: () => {
@@ -37,10 +45,8 @@ export default runExtension({
         setupNavigation()
         setupFuzzies()
 
-        createConfigObserver({title: CONFIG, config: {tabs: []}})
-
         //todo do the thing for a specific date object in a block
-        createBlockObserver((b: HTMLDivElement) => {
+        observersToCleanup = createBlockObserver((b: HTMLDivElement) => {
             if (!hasDateReferenced(b)) return
 
             const refElement = findDateRef(b)
@@ -59,5 +65,9 @@ export default runExtension({
         })
     },
     unload: () => {
+        disableFuzzies()
+        disableNavigation()
+        removeIconButtons()
+        cleanupBlockObservers()
     },
 })
