@@ -71,3 +71,6 @@ export default runExtension({
         cleanupBlockObservers()
     },
 })
+
+// top menu button example
+// https://github.com/panterarocks49/autotag/blob/b7653297a57baebef64f18888a6c2c1e186fd19f/src/index.js
