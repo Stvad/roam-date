@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useCallback, useEffect, useMemo, useState} from "react"
 
 import {Classes, Dialog} from "@blueprintjs/core"
 
@@ -37,11 +37,50 @@ export const DatePanel = ({blockUid, onClose}: { onClose: () => void; } & DatePa
         setDate(getFirstDate(blockUid))
     }
 
+    const moveDate = useCallback(async (shift: number) => {
+        modifyDateInBlock(blockUid, createModifier(shift))
+        await updateDate()
+    }, [blockUid])
+
+    const scheduleDate = useCallback(async (signal: SRSSignal) => {
+        rescheduleBlock(blockUid, signal)
+        await updateDate()
+    }, [blockUid])
+
+    const shortcuts = useMemo(() => ({
+        ArrowRight: () => moveDate(1),
+        ArrowLeft: () => moveDate(-1),
+        ArrowUp: () => moveDate(7),
+        ArrowDown: () => moveDate(-7),
+        '1': () => scheduleDate(SRSSignal.AGAIN),
+        '2': () => scheduleDate(SRSSignal.HARD),
+        '3': () => scheduleDate(SRSSignal.GOOD),
+        '4': () => scheduleDate(SRSSignal.EASY),
+        Escape: onClose,
+    }), [moveDate, onClose, scheduleDate])
+
+    useEffect(() => {
+        const listener = (ev: KeyboardEvent) => {
+            if (ev.target instanceof HTMLInputElement || ev.target instanceof HTMLTextAreaElement) return
+
+            const shortcut = shortcuts[ev.key as keyof typeof shortcuts]
+            if (!shortcut) return
+
+            ev.preventDefault()
+            void shortcut()
+        }
+
+        document.addEventListener('keydown', listener)
+
+        return () => {
+            document.removeEventListener('keydown', listener)
+        }
+    }, [shortcuts])
+
     const MoveDateButton = ({shift, label}: MoveDateButtonParams) =>
         <button className={"date-button"}
                 onClick={async () => {
-                    modifyDateInBlock(blockUid, createModifier(shift))
-                    await updateDate()
+                    await moveDate(shift)
                 }}
         >
             {label}
@@ -74,8 +113,7 @@ export const DatePanel = ({blockUid, onClose}: { onClose: () => void; } & DatePa
                     {SRSSignals.map(it => <button
                         className={"srs-button date-button"}
                         onClick={async () => {
-                            rescheduleBlock(blockUid, it)
-                            await updateDate()
+                            await scheduleDate(it)
                         }}
                     >
                         {SRSSignal[it]}
