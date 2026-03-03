@@ -16,12 +16,22 @@ SRS behaviour is compatible with [Roam Toolkit](https://github.com/roam-unoffici
 
 The extension will add the calendar icon close to each date link. Clicking on the icon will invoke the widget & allow you to edit the selected date
 
+Date panel keyboard shortcuts:
+
+- <code> ↑ / ↓ </code> - shift date by +1 / -1 day
+- <code> ← / → </code> - shift date by -1 / +1 week
+- <code> 1 / 2 / 3 / 4 </code> - apply SRS actions Again / Hard / Good / Easy
+- <code> Esc </code> - close the panel
+
 ![](https://github.com/Stvad/roam-date/raw/master/media/screen1.jpg)
 
 ### Navigation Shortcuts
 
 - <code> Ctrl + Shift + `</code> - go to today's page
-- <code> Ctrl + Shift + 1</code> - open today's page in the right sidebar
+- <code> Ctrl + Shift + 1</code> - open today's page in the right sidebar (or `Again` if a block is focused)
+- <code> Ctrl + Shift + 2 / 3 / 4</code> - apply `Hard` / `Good` / `Easy` SRS scheduling to focused block
+- <code> Ctrl + Shift + ↑ / ↓</code> - shift focused block date by +1 / -1 week
+- <code> Ctrl + Alt + ↑ / ↓</code> - shift focused block date by +1 / -1 day
 
 ### Date Manipulation
 
