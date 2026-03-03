@@ -16,7 +16,7 @@ const ID = 'roam-date'
 
 //todo this matches things that have a sub-node with date
 const hasDateReferenced = (element: HTMLDivElement) =>
-    RoamDate.regex.test(element.innerText)
+    Boolean(element.innerText.match(RoamDate.regex))
 
 const iconClass = 'roam-date-icon'
 

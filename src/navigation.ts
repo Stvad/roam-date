@@ -22,7 +22,7 @@ const getFocusedBlockUid = () => {
 
 const focusedBlockHasDate = (blockUid: string) => {
     const block = Block.fromUid(blockUid)
-    return RoamDate.referenceRegex.test(block.text)
+    return Boolean(block.text.match(RoamDate.referenceRegex))
 }
 
 const setupFocusedBlockShortcut = (shortcut: string, action: (blockUid: string) => void) => {
@@ -48,6 +48,18 @@ const setupDateShiftShortcut = (shortcut: string, days: number) => {
         modifyDateInBlock(blockUid, createModifier(days))
     })
 }
+
+const SHORTCUTS = [
+    'ctrl+shift+`',
+    'ctrl+shift+1',
+    'ctrl+shift+2',
+    'ctrl+shift+3',
+    'ctrl+shift+4',
+    'ctrl+shift+left',
+    'ctrl+shift+right',
+    'ctrl+alt+up',
+    'ctrl+alt+down',
+]
 
 export const setupNavigation = () => {
     hotkeys('ctrl+shift+`', () =>
@@ -75,5 +87,5 @@ export const setupNavigation = () => {
 }
 
 export const disableNavigation = () => {
-    hotkeys.unbind()
+    SHORTCUTS.forEach((shortcut) => hotkeys.unbind(shortcut))
 }
