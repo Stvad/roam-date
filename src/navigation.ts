@@ -81,8 +81,8 @@ const SHORTCUTS = [
     'ctrl+shift+2',
     'ctrl+shift+3',
     'ctrl+shift+4',
-    'ctrl+shift+left',
-    'ctrl+shift+right',
+    'ctrl+shift+up',
+    'ctrl+shift+down',
     'ctrl+alt+up',
     'ctrl+alt+down',
 ]
@@ -108,8 +108,8 @@ export const setupNavigation = () => {
     setupSRSShortcut('ctrl+shift+3', SRSSignal.GOOD)
     setupSRSShortcut('ctrl+shift+4', SRSSignal.EASY)
 
-    setupDateShiftShortcut('ctrl+shift+left', -1)
-    setupDateShiftShortcut('ctrl+shift+right', 1)
+    setupDateShiftShortcut('ctrl+shift+up', 7)
+    setupDateShiftShortcut('ctrl+shift+down', -7)
     setupDateShiftShortcut('ctrl+alt+up', 1)
     setupDateShiftShortcut('ctrl+alt+down', -1)
 }

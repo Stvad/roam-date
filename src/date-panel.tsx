@@ -48,10 +48,10 @@ export const DatePanel = ({blockUid, onClose}: { onClose: () => void; } & DatePa
     }, [blockUid])
 
     const shortcuts = useMemo(() => ({
-        ArrowRight: () => moveDate(1),
-        ArrowLeft: () => moveDate(-1),
-        ArrowUp: () => moveDate(7),
-        ArrowDown: () => moveDate(-7),
+        ArrowRight: () => moveDate(7),
+        ArrowLeft: () => moveDate(-7),
+        ArrowUp: () => moveDate(1),
+        ArrowDown: () => moveDate(-1),
         '1': () => scheduleDate(SRSSignal.AGAIN),
         '2': () => scheduleDate(SRSSignal.HARD),
         '3': () => scheduleDate(SRSSignal.GOOD),

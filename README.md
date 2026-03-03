@@ -18,8 +18,8 @@ The extension will add the calendar icon close to each date link. Clicking on th
 
 Date panel keyboard shortcuts:
 
-- <code> ← / → </code> - shift date by 1 day
-- <code> ↑ / ↓ </code> - shift date by 1 week
+- <code> ↑ / ↓ </code> - shift date by +1 / -1 day
+- <code> ← / → </code> - shift date by -1 / +1 week
 - <code> 1 / 2 / 3 / 4 </code> - apply SRS actions Again / Hard / Good / Easy
 - <code> Esc </code> - close the panel
 
@@ -30,7 +30,7 @@ Date panel keyboard shortcuts:
 - <code> Ctrl + Shift + `</code> - go to today's page
 - <code> Ctrl + Shift + 1</code> - open today's page in the right sidebar (or `Again` if a block is focused)
 - <code> Ctrl + Shift + 2 / 3 / 4</code> - apply `Hard` / `Good` / `Easy` SRS scheduling to focused block
-- <code> Ctrl + Shift + ← / →</code> - shift focused block date by -1 / +1 day
+- <code> Ctrl + Shift + ↑ / ↓</code> - shift focused block date by +1 / -1 week
 - <code> Ctrl + Alt + ↑ / ↓</code> - shift focused block date by +1 / -1 day
 
 ### Date Manipulation
