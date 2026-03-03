@@ -7,6 +7,32 @@ import {createModifier, modifyDateInBlock} from './core/date'
 import {rescheduleBlock} from './date-panel'
 import {SRSSignal} from './srs/scheduler'
 
+let previousHotkeysFilter: typeof hotkeys.filter | undefined
+let scopedHotkeysFilter: typeof hotkeys.filter | undefined
+
+const isBlockInput = (target: EventTarget | null) =>
+    target instanceof HTMLTextAreaElement && target.id.startsWith('block-input-')
+
+const enableNavigationInBlockInputs = () => {
+    if (scopedHotkeysFilter) return
+
+    previousHotkeysFilter = hotkeys.filter
+    scopedHotkeysFilter = (event: KeyboardEvent) => {
+        if (isBlockInput(event.target)) return true
+        return previousHotkeysFilter?.(event) ?? true
+    }
+    hotkeys.filter = scopedHotkeysFilter
+}
+
+const disableNavigationInBlockInputs = () => {
+    if (!scopedHotkeysFilter) return
+    if (hotkeys.filter === scopedHotkeysFilter && previousHotkeysFilter) {
+        hotkeys.filter = previousHotkeysFilter
+    }
+    scopedHotkeysFilter = undefined
+    previousHotkeysFilter = undefined
+}
+
 const getFocusedBlockUid = () => {
     const focusedBlock = window.roamAlphaAPI.ui.getFocusedBlock?.()
     if (focusedBlock && 'block-uid' in focusedBlock) {
@@ -62,6 +88,8 @@ const SHORTCUTS = [
 ]
 
 export const setupNavigation = () => {
+    enableNavigationInBlockInputs()
+
     hotkeys('ctrl+shift+`', () =>
         void window.roamAlphaAPI.ui.mainWindow.openPage({page: {title: RoamDate.toRoam(new Date())}}))
 
@@ -88,4 +116,5 @@ export const setupNavigation = () => {
 
 export const disableNavigation = () => {
     SHORTCUTS.forEach((shortcut) => hotkeys.unbind(shortcut))
+    disableNavigationInBlockInputs()
 }
